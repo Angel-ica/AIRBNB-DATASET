@@ -36,7 +36,6 @@ def load_airbnb(df,pred_value):
     return (features,labels)
 
 
-
 if __name__=='__main__':
     df=pd.read_csv('~/Airbnb/AIRBNB-DATASET/airbnb-property-listings/tabular_data/listing.csv')
     clean_df=clean_tabular_data()
