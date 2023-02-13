@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 import pandas as pd
+import yaml 
 from torch.utils.data import Dataset, DataLoader, random_split
 from torch.utils.tensorboard import SummaryWriter
 import torch.nn.functional as F
@@ -43,49 +44,68 @@ def data_loader(dataset, batch_size):
 
 DL=data_loader(dataset,64)
 
+
 class TrainNN(torch.nn.Module):
-    def __init__(self, input_nodes, hidden_layer, output_node):
+    def __init__(self, config):
         super(TrainNN,self).__init__() 
-        self.linear_layer = torch.nn.Sequential(
-            torch.nn.Linear(input_nodes,hidden_layer),
-            torch.nn.ReLU(),
-            torch.nn.Linear(hidden_layer,hidden_layer),
-            torch.nn.ReLU(),
-            torch.nn.Linear(hidden_layer,output_node)
-        )
-
-    def forward(self,X):
-        return self.linear_layer(X)         
-
-model = TrainNN()
+        config = get_nn_config()
+        hidden_layer_width = config[-2]
+        depth = config[-1]
+        self.linear_layer = []
+        input_nodes = 11
+        output_node = 11
+        for hidden_layer in range(depth -1 ):
+            self.linear_layer.append(torch.nn.Linear(input_nodes, hidden_layer_width))
+            self.linear_layer.append(torch.nn.ReLU())
+            input_nodes = hidden_layer_width
+        self.linear_layer.append(torch.nn.Linear(input_nodes, output_node))
+        self.linear_layer = torch.nn.Sequential(*self.linear_layer)
+    
+    def forward(self, X):
+        return self.linear_layer(X)
+model = TrainNN(config)
 
 def train(model, dataloader, epochs=2):
     optimiser = torch.optim.SGD(model.parameters(), lr=0.001)
-    writer = SummaryWriter()             
+    writer = SummaryWriter()
     batch_idx = 0
     for epoch in range(epochs):
-        for batch in dataloader[0]:
-            X, y = batch
-            y = torch.unsqueeze(y, 1)
-            prediction = model(X)
-            loss = F.mse_loss(prediction, y.float())
-            loss.backward()
-            optimiser.step()
-            optimiser.zero_grad()
-            writer.add_scalar('loss', loss.item(), batch_idx)
-            batch_idx += 1
+      for batch in dataloader[0]:
+        X, y = batch
+        y = torch.unsqueeze(y, 1)
+        prediction = model(X)
+        loss = F.mse_loss(prediction, y.float())
+        print(loss.item())
+        loss.backward()
+        optimiser.step()
+        optimiser.zero_grad()
+        writer.add_scalar('loss', loss.item(), batch_idx)
+        batch_idx += 1
 
-        for batch in dataloader[-1]:
-            X, y = batch
-            y = torch.unsqueeze(y, 1)
-            prediction = model(X)
-            loss = F.mse_loss(prediction, y.float())
-            writer.add_scalar('loss', loss.item(), batch_idx)
-            batch_idx += 1
+      with torch.no_grad():
+          avg_val_loss = 0
+          for batch in dataloader[-1]:
+              X, y = batch
+              y = torch.unsqueeze(y, 1)
+              prediction = model(X)
+              val_loss = F.mse_loss(prediction, y.float())
+              avg_val_loss += val_loss.item()
 
+          avg_val_loss /= len(dataloader[-1])
+          writer.add_scalar('val_loss', avg_val_loss, epoch)
 
 train(model, DL)
-    
+
+def get_nn_config(config_file):
+    with open(config_file, 'r') as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
+        return config
+
+
+
+def save_model():
+
+    pass
 
 
 
