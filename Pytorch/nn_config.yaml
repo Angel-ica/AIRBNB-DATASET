@@ -1,0 +1,5 @@
+optimiser: Gradient Descent
+learning-rate: 0.01
+hidden-layer-width: 5
+depth: 5
+
