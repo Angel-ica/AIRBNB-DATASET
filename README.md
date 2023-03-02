@@ -1,9 +1,9 @@
 
 # AIRBNB-DATASET
-Framework to train, tune and evaluate machine learning models on several tasks that are tackled by the Airbnb team. 
+A framework to train, tune and evaluate machine learning models on several tasks that are tackled by the Airbnb team. 
 
 
-The main task of the project is to build machine learning models for prdicting price, category and number of bedrroms of properties listed in the Airbnb dataset. 
+The main task of the project is to build machine learning models for predicting the price, category and number of bedrooms of properties listed in the Airbnb dataset. 
 
 Airbnb-property-listings
 -----------------------------------------------------
