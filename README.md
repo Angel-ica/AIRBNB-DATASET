@@ -8,7 +8,7 @@ The main task of the project is to train, tune and evaluate machine learning mod
 Airbnb-property-listings
 -----------------------------------------------------
 
-Data cleanig i.e dropping empty rows, columns, filling null values, resizing images etc.
+Data cleaning i.e dropping empty rows, columns, filling null values, resizing images etc.
 
 -----------------------------------------------------
 
