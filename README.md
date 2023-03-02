@@ -28,8 +28,8 @@ PyTorch is used to build neural networks to predict the price of houses and the 
 
 The loss is evaluated and the hyperparameters are optimised to reduce the loss.
 
+![IMG_0770](https://user-images.githubusercontent.com/87237671/222360709-18eaf730-d425-4d47-a749-b35c4615d4cf.jpg)
 
-![IMG_0770](https://user-images.githubusercontent.com/87237671/222359671-e966c44a-a013-4b44-bed5-5e3a62c9ebed.png)
 
 The best model, hyperparameters and the metrics are stored for future reference.
 ----------------------------------------------------------
