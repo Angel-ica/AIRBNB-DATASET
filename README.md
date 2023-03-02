@@ -25,8 +25,13 @@ PyTorch
 
 PyTorch is an open source ml library based on the Torch library. PyTorch provides a variety of tools and utilities for building and training neural networks, including automatic differentiation, tensor computation with GPU acceleration, and a high-level API for building neural network models.
 PyTorch is used to build neural networks to predict the price of houses and the number of bedrooms. 
-The best model, hyperparameters and metrics are stored for future reference. 
 
+The loss is evaluated and the hyperparameters are optimised to reduce the loss.
+
+
+![IMG_0770](https://user-images.githubusercontent.com/87237671/222359671-e966c44a-a013-4b44-bed5-5e3a62c9ebed.png)
+
+The best model, hyperparameters and the metrics are stored for future reference.
 ----------------------------------------------------------
 
 
